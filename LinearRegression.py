@@ -52,31 +52,7 @@ class LinearRegression:
     #   - scaling and standardizing attributes
     #   - anything else that you think could increase model performance
     # Below is the pre-process function
-    def preProcess(self):
 
-        #dropping columns "symboling and normalized losses"
-
-        self.X = np.delete(self.X, [1, 2, 3], axis=1)
-
-        self.X = np.concatenate((self.X, self.y), axis=1)
-        df = pd.DataFrame(data=self.X[:, :])
-
-        df = df.where(df != '?', np.nan)
-        df = df.dropna()
-
-        lb_make = LabelEncoder()
-        columns = [1, 2, 3, 4, 5, 6, 7, 13, 14, 16]
-        for i in columns:
-            df.iloc[:, i] = lb_make.fit_transform(df.iloc[:, i])
-        for i in range(0, 25):
-            df.iloc[:, i] = pd.to_numeric(df.iloc[:, i])
-
-        self.X = df.values
-        self.W = np.delete(self.W, [1, 2, 3], axis=0)
-        self.y = df.iloc[:, df.shape[1]-1].values.reshape(df.shape[0], 1)
-        self.X = df.iloc[:, 0:df.shape[1]-1]
-
-        self.X = self.X
 
     # Below is the training function
     def train(self, epochs = 10, learning_rate = 0.05):
@@ -108,12 +84,33 @@ class LinearRegression:
         return mse
 
 
+def preProcess(data):
+    # dropping columns "symboling and normalized losses"
+    df = pd.read_csv(data)
+
+    df.drop(df.columns[[0, 1]], axis=1, inplace=True)
+
+    df = df.where(df != '?', np.nan)
+    df = df.dropna()
+
+    lb_make = LabelEncoder()
+    columns = [0, 1, 2, 3, 4, 5, 6, 12, 13, 15]
+    for i in columns:
+        df.iloc[:, i] = lb_make.fit_transform(df.iloc[:, i])
+    for i in range(0, 24):
+        df.iloc[:, i] = pd.to_numeric(df.iloc[:, i])
+    print(df.iloc[:, 18])
+    data = df.values
+    return data
+
+
 if __name__ == "__main__":
 
     dataset = 'https://archive.ics.uci.edu/ml/machine-learning-databases/autos/imports-85.data'
 
     data = pd.read_csv(dataset)
-    data = data.iloc[:].values
+    data = preProcess(dataset)
+    print(data.shape)
     np.random.shuffle(data)
     split = int(len(data) * .8)
     training, test = data[:split, :], data[split:, :]
@@ -121,9 +118,9 @@ if __name__ == "__main__":
     pd.DataFrame(training).to_csv("train1.csv")
     pd.DataFrame(test).to_csv("test1.csv")
 
-    #preProcess("train1.csv")
+    # preProcess("train1.csv")
     model = LinearRegression("train1.csv")
-    model.preProcess()
+
     W, e = model.train()
     mse = model.predict("test1.csv")
     print(mse)
