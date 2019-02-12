@@ -1,3 +1,10 @@
+#####################################################################################################################
+#   CS 6375.003 - Assignment 1, Linear Regression using Gradient Descent
+#   @author : Shreyash Mane     ssm170730
+#           : Supraja Ponnur    sxp179130
+#   Designed the preProcess function to modify the dataset to fit the necessary constraints of Linear Regression.
+#
+#####################################################################################################################
 
 import matplotlib.pyplot as plt
 import numpy as np
