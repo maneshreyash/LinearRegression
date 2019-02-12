@@ -32,7 +32,7 @@ class LinearRegression:
     #        epochs: Number of Iterations
     #        learning_rate : The value of alpha i.e. the rate at which we take steps
     # @return: The newly computed value for W based on the hypothesis and the training error
-    def train(self, epochs = 1000, learning_rate = 0.25):
+    def train(self, epochs = 500, learning_rate = 0.25):
         # Perform Gradient Descent
         for i in range(epochs):
             # Make prediction with current weights
