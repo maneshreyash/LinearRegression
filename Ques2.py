@@ -51,10 +51,9 @@ print("Mean squared error: %.2f"
 print('R squared value %.2f' % r2_score(y_test, y_pred))
 
 # Plot outputs
-plt.scatter(X_test.iloc[:, 20], y_test,  color='black')
-plt.plot(X_test.iloc[:, 20], y_pred, color='blue', linewidth=3)
+plt.scatter(X_test.iloc[:, 8], y_test,  color='blue')
+plt.scatter(X_test.iloc[:, 8], y_pred,  color='red')
 
-plt.xticks(())
-plt.yticks(())
+plt.plot(X_test.iloc[:, 8], y_pred, color='green', linewidth=1)
 
 plt.show()
